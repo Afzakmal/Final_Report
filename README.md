@@ -208,6 +208,16 @@ AirAsia slightly scores higher because customers appreciate affordability and co
 | AirAsia | 3.19 |
 | Malaysia Airlines | 3.54 |
 
+Bar Chart
+<p align="center">
+  <img src="v2_seat_comfort_comparison_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v2_seat_comfort_comparison_piechart.png" width="900">
+</p>
+
 ### Analysis
 
 Malaysia Airlines provides better seating comfort due to its full-service airline experience.
@@ -220,6 +230,17 @@ Malaysia Airlines provides better seating comfort due to its full-service airlin
 |---|---:|
 | AirAsia | 3.38 |
 | Malaysia Airlines | 3.58 |
+
+
+Bar Chart
+<p align="center">
+  <img src="v3_cabin_staff_comparison_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v3_cabin_staff_comparison_piechart.png" width="900">
+</p>
 
 ### Analysis
 
@@ -238,6 +259,17 @@ Malaysia Airlines receives better cabin staff ratings because passengers highlig
 | AirAsia | 3.67 |
 | Malaysia Airlines | 3.81 |
 
+
+Bar Chart
+<p align="center">
+  <img src="v4_value_for_money_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v4_value_for_money_piechart.png" width="900">
+</p>
+
 ### Analysis
 
 AirAsia is known for affordable travel, while Malaysia Airlines provides stronger overall service value.
@@ -252,6 +284,16 @@ AirAsia is known for affordable travel, while Malaysia Airlines provides stronge
 | AirAsia | No | 100 |
 | Malaysia Airlines | Yes | 307 |
 | Malaysia Airlines | No | 156 |
+
+Bar Chart
+<p align="center">
+  <img src="v5_recommended_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v5_recommended_piechart.png" width="900">
+</p>
 
 Both airlines received more positive recommendations than negative feedback.
 
@@ -344,6 +386,16 @@ df_sentiment = df.withColumn(
 |---|---:|---:|---:|
 | Malaysia Airlines | 377 | 8 | 87 |
 | AirAsia | 245 | 3 | 57 |
+
+Bar Chart
+<p align="center">
+  <img src="v6_sentiment_analysis_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v6_sentiment_analysis_piechart.png" width="900">
+</p>
 
 ---
 
