@@ -403,7 +403,5 @@ Malaysia Airlines is preferred for comfort and service quality, while AirAsia re
 
 The sentiment analysis supports the rating analysis by showing that customers generally have positive opinions toward both airlines.
 
-```
-```
 ---
 
