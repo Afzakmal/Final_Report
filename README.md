@@ -183,6 +183,11 @@ Result:
 | AirAsia | 6.45 |
 | Malaysia Airlines | 6.44 |
 
+Bar Chart
+<p align="center">
+  <img src="images/dashboard.png" width="900">
+</p>
+
 ### Analysis
 
 Both airlines have almost identical overall ratings.
