@@ -1,28 +1,16 @@
-# Final_Report
-
-Here is the complete content as **one single `README.md` file**:
-
-```markdown
 # Malaysia Airlines vs AirAsia Customer Review Analysis
 
 ## Project Overview
 
 This project performs a comparative analysis of customer reviews between **Malaysia Airlines** and **AirAsia** using **Apache Hive** and **PySpark**.
 
-The analysis evaluates customer satisfaction by examining:
+The analysis evaluates customer satisfaction by examining customer ratings, service quality attributes, recommendation patterns, and sentiments extracted from review texts.
 
-- Customer ratings
-- Service quality dimensions
-- Recommendation patterns
-- Sentiment extracted from customer review texts
-
-The purpose of this project is to understand passenger perceptions and identify the strengths and weaknesses of both airlines based on real customer experiences.
+The goal is to understand passenger opinions and identify the strengths and weaknesses of both airlines based on real customer experiences.
 
 ---
 
-# Objectives
-
-The objectives of this project are:
+## Objectives
 
 - Compare customer satisfaction between Malaysia Airlines and AirAsia.
 - Analyze customer ratings across different service quality dimensions.
@@ -33,35 +21,31 @@ The objectives of this project are:
 
 ---
 
-# Dataset Description
+# Dataset
 
 The dataset contains airline customer reviews collected from an airline review platform.
 
-Each review contains structured ratings and written customer feedback.
+## Attributes
 
-## Dataset Attributes
-
-| Attribute | Description |
-|---|---|
-| Airline name | Airline company |
-| Review title | Review title |
-| Author | Customer name |
-| Author country | Customer country |
-| Flight date | Date of flight |
-| Review content | Customer review text |
-| Aircraft | Aircraft type |
-| Traveller type | Passenger category |
-| Cabin class | Travel class |
-| Flight route | Flight route |
-| Overall rating | Overall satisfaction score |
-| Seat comfort rating | Seat comfort score |
-| Cabin staff service rating | Staff service score |
-| Food & beverages rating | Food quality score |
-| In-flight entertainment rating | Entertainment score |
-| Ground service rating | Airport service score |
-| Wi-Fi connectivity rating | Wi-Fi score |
-| Value for money rating | Price satisfaction |
-| Recommendation status | Customer recommendation |
+- Airline name
+- Review title
+- Author
+- Author country
+- Flight date
+- Review content
+- Aircraft
+- Traveller type
+- Cabin class
+- Flight route
+- Overall rating
+- Seat comfort rating
+- Cabin staff service rating
+- Food & beverages rating
+- In-flight entertainment rating
+- Ground service rating
+- Wi-Fi connectivity rating
+- Value for money rating
+- Recommendation status
 
 ---
 
@@ -78,35 +62,29 @@ Each review contains structured ratings and written customer feedback.
 
 # Project Workflow
 
-## Step 1: Data Loading
+## 1. Data Loading
 
-The airline review dataset was loaded from CSV format into Hive.
+The airline review dataset was imported from CSV into Hive.
 
-Hive table created:
+Hive table:
 
 ```
-
 airline_reviews
-
-````
-
-The dataset was stored in Hive to support SQL-based data processing and analysis.
+```
 
 ---
 
-# Step 2: Data Cleaning in Hive
+# 2. Data Cleaning
 
-## 2.1 Checking Missing Ratings
-
-Missing overall ratings were checked.
+## Checking Missing Ratings
 
 ```sql
 SELECT *
 FROM airline_reviews
 WHERE overall_rating IS NULL;
-````
+```
 
-Counting missing values:
+Count missing ratings:
 
 ```sql
 SELECT COUNT(*) AS missing_ratings
@@ -114,13 +92,11 @@ FROM airline_reviews
 WHERE overall_rating IS NULL;
 ```
 
-This step ensures incomplete rating records do not affect analysis.
-
 ---
 
-## 2.2 Filtering Relevant Airlines
+## Filtering Malaysia Airlines and AirAsia
 
-Only Malaysia Airlines and AirAsia reviews were selected.
+Only relevant airlines were selected:
 
 ```sql
 CREATE TABLE mas_airasia_reviews AS
@@ -129,18 +105,17 @@ FROM airline_reviews
 WHERE airline_name IN ('Malaysia Airlines','AirAsia');
 ```
 
-This creates a focused dataset for comparison.
-
 ---
 
-## 2.3 Duplicate Review Checking
+## Duplicate Checking
 
-Duplicate reviews were identified using:
+Duplicates were identified using:
 
-* Airline name
-* Review title
-* Author
-* Flight date
+- Airline name
+- Review title
+- Author
+- Flight date
+
 
 ```sql
 SELECT airline_name,
@@ -158,9 +133,7 @@ HAVING COUNT(*) > 1;
 
 ---
 
-## 2.4 Removing Duplicate Reviews
-
-Duplicates were removed using ROW_NUMBER().
+## Removing Duplicate Reviews
 
 ```sql
 CREATE TABLE mas_airasia_reviews_clean AS
@@ -181,42 +154,18 @@ WHERE rn = 1;
 
 ---
 
-## 2.5 Verify Duplicate Removal
-
-```sql
-SELECT airline_name,
-       title,
-       author,
-       flight_date,
-       COUNT(*) AS duplicate_count
-FROM mas_airasia_reviews_clean
-GROUP BY airline_name,
-         title,
-         author,
-         flight_date
-HAVING COUNT(*) > 1;
-```
-
-After cleaning, duplicate records were removed.
-
----
-
 # Review Distribution After Cleaning
 
-| Airline           | Total Reviews |
-| ----------------- | ------------: |
-| Malaysia Airlines |           484 |
-| AirAsia           |           308 |
-
-Malaysia Airlines contains more reviews compared with AirAsia.
+| Airline | Total Reviews |
+|---|---:|
+| Malaysia Airlines | 484 |
+| AirAsia | 308 |
 
 ---
 
-# Exploratory Data Analysis (EDA)
+# Exploratory Data Analysis
 
-## 1. Average Overall Rating
-
-SQL:
+## Average Overall Rating
 
 ```sql
 SELECT
@@ -229,91 +178,72 @@ GROUP BY airline_name;
 
 Result:
 
-| Airline           | Average Rating |
-| ----------------- | -------------: |
-| AirAsia           |           6.45 |
-| Malaysia Airlines |           6.44 |
+| Airline | Rating |
+|---|---:|
+| AirAsia | 6.45 |
+| Malaysia Airlines | 6.44 |
 
 ### Analysis
 
-Both airlines have almost identical overall satisfaction ratings.
+Both airlines have almost identical overall ratings.
 
-AirAsia slightly exceeds Malaysia Airlines, mainly due to affordability and convenience.
+AirAsia slightly scores higher because customers appreciate affordability and convenience.
 
 ---
 
-# 2. Seat Comfort Comparison
+# Seat Comfort Comparison
 
-Result:
-
-| Airline           | Seat Comfort |
-| ----------------- | -----------: |
-| AirAsia           |         3.19 |
-| Malaysia Airlines |         3.54 |
+| Airline | Rating |
+|---|---:|
+| AirAsia | 3.19 |
+| Malaysia Airlines | 3.54 |
 
 ### Analysis
 
-Malaysia Airlines provides better seat comfort.
-
-Passengers generally prefer Malaysia Airlines because of:
-
-* More comfortable seating
-* Full-service cabin experience
+Malaysia Airlines provides better seating comfort due to its full-service airline experience.
 
 ---
 
-# 3. Cabin Staff Service Comparison
+# Cabin Staff Service Comparison
 
-Result:
-
-| Airline           | Cabin Staff Rating |
-| ----------------- | -----------------: |
-| AirAsia           |               3.38 |
-| Malaysia Airlines |               3.58 |
+| Airline | Rating |
+|---|---:|
+| AirAsia | 3.38 |
+| Malaysia Airlines | 3.58 |
 
 ### Analysis
 
-Malaysia Airlines received higher cabin staff ratings.
+Malaysia Airlines receives better cabin staff ratings because passengers highlight:
 
-Positive feedback included:
-
-* Professional cabin crew
-* Better customer service
-* Passenger assistance
+- Professional crew
+- Better assistance
+- Service quality
 
 ---
 
-# 4. Value for Money Comparison
+# Value for Money Comparison
 
-Result:
-
-| Airline           | Value Rating |
-| ----------------- | -----------: |
-| AirAsia           |         3.67 |
-| Malaysia Airlines |         3.81 |
+| Airline | Rating |
+|---|---:|
+| AirAsia | 3.67 |
+| Malaysia Airlines | 3.81 |
 
 ### Analysis
 
-Both airlines provide good value.
-
-AirAsia is preferred for budget travel, while Malaysia Airlines provides better overall service value.
+AirAsia is known for affordable travel, while Malaysia Airlines provides stronger overall service value.
 
 ---
 
-# 5. Recommendation Analysis
+# Recommendation Analysis
 
-Result:
+| Airline | Recommended | Count |
+|---|---|---:|
+| AirAsia | Yes | 205 |
+| AirAsia | No | 100 |
+| Malaysia Airlines | Yes | 307 |
+| Malaysia Airlines | No | 156 |
 
-| Airline           | Recommendation  | Count |
-| ----------------- | --------------- | ----: |
-| AirAsia           | Recommended     |   205 |
-| AirAsia           | Not Recommended |   100 |
-| Malaysia Airlines | Recommended     |   307 |
-| Malaysia Airlines | Not Recommended |   156 |
-
-### Analysis
-
-Both airlines received more positive recommendations than negative responses.
+Both airlines received more positive recommendations than negative feedback.
 
 ---
 
@@ -321,59 +251,51 @@ Both airlines received more positive recommendations than negative responses.
 
 ## Malaysia Airlines
 
-### Positive Feedback
+Positive feedback:
 
-Customers highlighted:
+- Professional cabin crew
+- Comfortable seats
+- Good food quality
+- Premium service experience
 
-* Cabin crew professionalism
-* Seat comfort
-* Food quality
-* Premium service experience
+Negative feedback:
 
-### Negative Feedback
-
-Common issues:
-
-* Flight delays
-* Older aircraft
-* Food inconsistency
+- Flight delays
+- Older aircraft
+- Food inconsistency
 
 ---
 
 ## AirAsia
 
-### Positive Feedback
+Positive feedback:
 
-Customers appreciated:
+- Affordable tickets
+- Good value for money
+- Convenient routes
 
-* Affordable ticket prices
-* Value for money
-* Convenient routes
+Negative feedback:
 
-### Negative Feedback
-
-Common complaints:
-
-* Extra service charges
-* Limited onboard facilities
-* Flight delays
-* Lower seating comfort
+- Extra charges
+- Limited onboard services
+- Flight delays
+- Less comfortable seats
 
 ---
 
 # Sentiment Analysis Using PySpark
 
-Sentiment analysis was performed using **TextBlob** and **PySpark**.
+Sentiment analysis was performed using **TextBlob**.
 
-Each review was classified into:
+Reviews were classified into:
 
-* Positive
-* Neutral
-* Negative
+- Positive
+- Neutral
+- Negative
 
 ---
 
-## Sentiment Classification Code
+## Sentiment Processing Code
 
 ```python
 from textblob import TextBlob
@@ -406,52 +328,50 @@ df_sentiment = df.withColumn(
 
 ---
 
-# Sentiment Result
+# Sentiment Results
 
-| Airline           | Positive | Neutral | Negative |
-| ----------------- | -------: | ------: | -------: |
-| Malaysia Airlines |      377 |       8 |       87 |
-| AirAsia           |      245 |       3 |       57 |
+| Airline | Positive | Neutral | Negative |
+|---|---:|---:|---:|
+| Malaysia Airlines | 377 | 8 | 87 |
+| AirAsia | 245 | 3 | 57 |
 
 ---
 
-# Sentiment Analysis Findings
+# Sentiment Findings
 
-Both airlines received mostly positive customer feedback.
+Both airlines received mostly positive customer sentiment.
 
 ## Malaysia Airlines
 
-Positive sentiment focused on:
+Positive sentiment:
 
-* Cabin service
-* Comfort
-* Premium experience
+- Cabin service
+- Comfort
+- Premium experience
 
-Negative sentiment focused on:
+Negative sentiment:
 
-* Flight delays
-* Aircraft condition
+- Delays
+- Aircraft condition
 
 ---
 
 ## AirAsia
 
-Positive sentiment focused on:
+Positive sentiment:
 
-* Affordable fares
-* Convenience
-* Budget travel
+- Affordable fares
+- Convenience
+- Budget travel
 
-Negative sentiment focused on:
+Negative sentiment:
 
-* Additional charges
-* Limited onboard services
+- Additional charges
+- Limited services
 
 ---
 
-# Saving Sentiment Results to Hive
-
-The final sentiment dataset was stored back into Hive.
+# Save Sentiment Results to Hive
 
 ```python
 df_sentiment.write.mode("overwrite").saveAsTable(
@@ -461,28 +381,27 @@ df_sentiment.write.mode("overwrite").saveAsTable(
 
 ---
 
-# Final Conclusion
+# Conclusion
 
-The analysis shows that both Malaysia Airlines and AirAsia provide satisfactory customer experiences.
+The analysis shows that both airlines provide satisfactory customer experiences.
 
 ## Malaysia Airlines Strengths
 
-* Better seat comfort
-* Higher cabin staff rating
-* Strong full-service experience
+- Better seat comfort
+- Higher cabin staff service rating
+- Strong full-service experience
 
 ## AirAsia Strengths
 
-* Affordable pricing
-* Budget-friendly travel
-* Good accessibility
+- Affordable pricing
+- Budget-friendly travel
+- Good accessibility
 
 Overall:
 
-* Malaysia Airlines is preferred for comfort, service quality, and passenger experience.
-* AirAsia remains competitive due to affordability and value for money.
+Malaysia Airlines is preferred for comfort and service quality, while AirAsia remains competitive due to affordability and value for money.
 
-The sentiment analysis supports the rating analysis by showing that passengers generally express positive opinions toward both airlines.
+The sentiment analysis supports the rating analysis by showing that customers generally have positive opinions toward both airlines.
 
 ```
 ```
