@@ -185,7 +185,12 @@ Result:
 
 Bar Chart
 <p align="center">
-  <img src="images/dashboard.png" width="900">
+  <img src="v1_average_overall_rating_barchart.png" width="900">
+</p>
+
+Pie Chart
+<p align="center">
+  <img src="v1_average_overall_rating_piechart.png" width="900">
 </p>
 
 ### Analysis
